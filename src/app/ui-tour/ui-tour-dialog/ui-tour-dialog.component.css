@@ -1,0 +1,20 @@
+.ui-tour-dialog {
+  display: block;
+  background: rgb(255, 255, 255);
+  padding: 10px 10px 5px 10px;
+}
+
+.highlight {
+  position: relative;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 0 5px 5px rgb(0 0 0 / 54%);
+}
+
+.step-container{
+  max-width: 330px;
+}
+
+.step-footer{
+  @apply flex justify-end;
+}

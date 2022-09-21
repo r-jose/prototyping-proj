@@ -1,0 +1,79 @@
+<div class="select-container" clickOutside (onClickOutside)="isOpen=false"
+[ngClass]="isMobile ? 'yes': 'no'">
+  <span class="container-placeholder" *ngIf="selectedItems.length == 0" (click)="open()">{{config.placeholder}}</span>
+  <span class="dropdown-caret" (click)="open()"><i
+      [ngClass]="isOpen? 'fas fa-caret-up': 'fas fa-caret-down'"></i></span>
+  <span class="more-items" (click)="open()" *ngIf="more!==0">+{{ more }}</span>
+  <div class="selected-items" (click)="open()">
+    <span class="selected-item" *ngFor="let item of items"
+      [ngClass]="{'disabled': item.isDisabled  || isDataProcessing || disabled}">
+      {{item.text}}
+      <span *ngIf="!item.isDisabled && !disabled" (click)="removeItem(item)">
+        <i class="fa fa-times-circle remove-button"></i>
+      </span>
+      <span *ngIf="item.isDisabled && !disabled">
+        <i class="fa fa-lock remove-button"></i>
+      </span>
+    </span>
+    <span class="loading-indicator" *ngIf="isDataProcessing"><i class="fas fa-spinner fa-spin"></i></span>
+  </div>
+  <div class=" options" *ngIf="isOpen">
+    <div class="filter-container">
+      <input type="text" placeholder="Filter" [formControl]="filterControl">
+      <span class="clear-filter" (click)="filterControl.setValue('')"><i class="fa fa-times-circle"></i></span>
+    </div>
+
+    <ng-container *ngIf="datasource$ | async as data">
+      <div class="option-container" *ngIf="!config.singleSelection && !hasFilter && data.length>0">
+        <input type="checkbox" class="option-item" [(ngModel)]="isSelectedAll" [disabled]='isDataProcessing || disabled'
+          (ngModelChange)="selectAll()">{{hasSelected}}
+        <span *ngIf="config.enableTreeView"><i class="expand-class"
+            [ngClass]="isSelectedAll? 'fa fa-list': 'fa fa-tasks'"></i></span>
+      </div>
+
+      <div class="no-data-label-container" *ngIf="data.length==0">
+        <p>{{config.noDataText}}</p>
+      </div>
+      <div class="option-container option-container-items" *ngFor="let source of data"
+        [class.disabled]="source.isDisabled">
+
+        <div class="option-select-deselect-all">
+          <input type="checkbox" class="option-item" [checked]="source.isSelected" (click)='onItemSelect(source)'
+            [value]="source.id" [disabled]="source.isDisabled || isDataProcessing || disabled">
+
+          <span *ngIf="config.enableTreeView" (click)="showOrHideHierarchy(source)"><i class="expand-class"
+              [ngClass]="source.isExpanded? 'fa fa-compress': 'fa fa-expand-alt'"></i></span>
+        </div>
+        <div class="option-items">
+          <span class="option-text">{{source.text}}</span>
+
+          <div class="hierarchies" *ngIf="source.isExpanded">
+            <ng-container *ngTemplateOutlet="hierarchy; context:{ $implicit: source.hierarchies }"></ng-container>
+          </div>
+
+          <ng-template #hierarchy let-items>
+            <div class="hierarchy-item" *ngFor="let item of items">
+
+              <ng-container *ngIf="source.text==item.text else selectedText">
+                <p class="selected" [ngClass]="item.isParent?'parent':'child'">*{{item.text}}*</p>
+              </ng-container>
+
+              <ng-container *ngIf="item.hierarchies">
+                <ng-container *ngTemplateOutlet="hierarchy; context:{ $implicit: item.hierarchies }"></ng-container>
+              </ng-container>
+
+              <ng-template #selectedText>
+                <p [ngClass]="item.isParent?'parent':'child'">-{{item.text}}</p>
+              </ng-template>
+
+            </div>
+
+          </ng-template>
+        </div>
+
+
+      </div>
+
+    </ng-container>
+  </div>
+</div>

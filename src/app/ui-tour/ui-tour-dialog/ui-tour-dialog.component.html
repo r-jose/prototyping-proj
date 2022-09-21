@@ -1,0 +1,13 @@
+<div class="step-container flex flex-col">
+  <div class="step-title">
+    {{stepEl.ariaLabel}}
+  </div>
+  <div class="step-details my-2">
+    {{ step.content }}
+  </div>
+  <div class="step-footer">
+    <button mat-button (click)="close()">Done</button>
+    <button mat-button (click)="prev()">Prev</button>
+    <button mat-button (click)="next()" *ngIf="!(uiTour.activeStepIndex > (uiTour.steps.length-2))">Next</button>
+  </div>
+</div>

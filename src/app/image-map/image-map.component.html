@@ -1,0 +1,38 @@
+<div class="image-map-container" appUiTour>
+  <div class="image-map-actions-container">
+    <div class="btn-action-group" role="group">
+      <button aria-label="Rectangle" appUiTourStep="{{rectangleInstruction}}" [class.active]="canvasAction === canvasActions.Rectangle" type="button" class="btn-action-l btn-action-default" (click)="onActionChanged(canvasActions.Rectangle)">
+        Rectangle
+      </button>
+      <button aria-label="Circle" appUiTourStep="{{circleInstruction}}" [class.active]="canvasAction === canvasActions.Circle" type="button" class="btn-action-default" (click)="onActionChanged(canvasActions.Circle)">
+        Circle
+      </button>
+      <button aria-label="Polygon" appUiTourStep="{{polygonInstruction}}" [class.active]="canvasAction === canvasActions.Polygon" type="button" class="btn-action-default" (click)="onActionChanged(canvasActions.Polygon)">
+        Polygon
+      </button>
+      <button aria-label="Select" appUiTourStep="{{selectInstruction}}" [class.active]="canvasAction === canvasActions.Select" type="button" class="btn-action-default" (click)="onActionChanged(canvasActions.Select)">
+        Select
+      </button>
+      <button aria-label="Delete" appUiTourStep="{{deleteInstruction}}" type="button" class="btn-action-default" (click)="canvas?.delete()">
+        Delete
+      </button>
+      <button aria-label="Delete" appUiTourStep="{{deleteInstruction}}" type="button" class="btn-action-default" (click)="browseTopics()">
+        Browse image
+      </button>
+      <select aria-label="Zoom" appUiTourStep="{{zoomInstruction}}" [(ngModel)]="zoomValue" (ngModelChange)="onZoomChanged()" class="btn-action-r btn-action-default">
+        <option value="0.25">25%</option>
+        <option value="0.50">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1">100%</option>
+        <option value="1.50">150%</option>
+        <option value="2.00">200%</option>
+      </select>
+    </div>
+  </div>
+  <div aria-label="Canvas" appUiTourStep="{{canvasInstruction}}" class="image-map-canvas-container" [ngStyle]="canvasContainerScaleStyle$|async">
+    <img #canvasImage src="https://baconmockup.com/640/360" class="absolute covered-image" id="src-img" [ngStyle]="imageScaleStyle$ | async" />
+    <canvas id="canvas" class="border" ></canvas>
+  </div>
+</div>
+
+

@@ -1,0 +1,6 @@
+<select [(ngModel)]="selectedLayout" name="layouts" id="layout-select" (change)="onChange()">
+  <option [value]="layout.FixedLayout1">Layout 1</option>
+  <option [value]="layout.FixedLayout2">Layout 2</option>
+</select>
+<ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+

@@ -1,0 +1,130 @@
+.select-container.disabled {
+  background-color: transparent !important;
+}
+.select-container {
+  @apply relative flex-col bg-white;
+  border: 1px solid #80808063;
+  border-radius: 6px;
+  .container-placeholder {
+    @apply absolute left-0 p-2;
+  }
+  .dropdown-caret {
+    @apply relative float-right p-2;
+  }
+  .more-items {
+    @apply relative float-right p-2;
+  }
+  .selected-items {
+    @apply flex flex-wrap;
+    min-height: 35px;
+    .selected-item {
+      @apply relative;
+      margin: 5px 3px 5px 3px;
+      padding: 2px 25px 2px 5px;
+      border-radius: 6px;
+      box-shadow: 0 1px 5px #959595;
+      background-color: rgb(59, 130, 246);
+      color: white;
+      font-size: 14px;
+      span {
+        position: absolute;
+        right: 5px;
+        top: 2px;
+      }
+    }
+    .selected-item.disabled {
+      background-color: #959595;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .options {
+    @apply absolute flex-col flex-grow min-w-full mt-1 bg-white;
+    box-shadow: 0 1px 5px #959595;
+    max-height: 350px;
+    overflow: auto;
+    z-index: 1;
+    .option-container {
+      @apply p-1;
+      &:hover {
+        background-color: rgb(59, 130, 246);
+      }
+      &:hover .hierarchies .selected {
+        color: white;
+      }
+      .hierarchies {
+        // @apply ml-10;
+        font-size: 14px;
+        .selected {
+          @apply font-semibold;
+          color: rgb(59, 130, 246);
+        }
+        .hierarchy-item {
+          @apply ml-6;
+          .parent {
+            @apply font-bold;
+          }
+          .child {
+            @apply font-semibold;
+          }
+        }
+      }
+
+      .option-select-deselect-all {
+        @apply flex flex-row;
+      }
+    }
+    .option-item,
+    .expand-class {
+      @apply relative float-left;
+      top: 6px;
+    }
+    input[type="checkbox"],
+    .expand-class {
+      @apply mr-2;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    input[type="checkbox"]:disabled {
+      @apply bg-gray-300;
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+
+    .filter-container {
+      @apply flex;
+      border-bottom: 1px solid #c9d3ce;
+      input[type="text"] {
+        @apply flex-grow m-1 pr-7;
+        border-radius: 6px;
+      }
+      .clear-filter {
+        @apply absolute text-xs right-2;
+        top: 14px;
+        font-size: 22px;
+        color: rgb(59, 130, 246);
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .no-data-label-container {
+      @apply flex justify-center m-4;
+    }
+    .option-container-items {
+      @apply flex;
+      .option-items {
+        @apply flex-row;
+      }
+    }
+  }
+  .loading-indicator {
+    @apply absolute right-6;
+    top: 8px;
+  }
+}
